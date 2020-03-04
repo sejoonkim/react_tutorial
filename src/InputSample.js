@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function InputSample() {
     const [inputs, setInputs] = useState({
@@ -6,6 +6,8 @@ function InputSample() {
         name: '',
         nickname: '',
     });
+
+    const nameInput =useRef();
 
     // use destructuring assignment to extract values
     const { name, nickname } = inputs;
@@ -40,7 +42,7 @@ function InputSample() {
             name: '',
             nickname: '',
         });
-
+        nameInput.current.focus();
 
         // setText('');
     };
@@ -52,6 +54,8 @@ function InputSample() {
                 placeholder="name" 
                 onChange={onChange} 
                 value={name}
+                ref={nameInput}
+
             />
             <input 
                 name="nickname" 

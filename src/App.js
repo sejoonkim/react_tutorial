@@ -60,7 +60,7 @@ function App() {
       email,
     };
     //setUsers([...users, user]);
-    setUsers(users.concat(user));
+    setUsers(users => users.concat(user));
 
     setInputs({
       username: '',
@@ -68,21 +68,21 @@ function App() {
     });
 
     nextId.current += 1;
-  }, [username, email, users]);
+  }, [username, email]);
 
 
   const onRemove = useCallback(id => {
-    setUsers(users.filter(user => user.id !== id));
-  }, [users]);
+    setUsers(user => users.filter(user => user.id !== id));
+  }, []);
 
-  
+
   const onToggle = useCallback(id => {
-    setUsers(users.map(
+    setUsers(users => users.map(
       user => user.id === id
         ? { ...user, active: !user.active } // make a new object, copy original, then adjust
         : user
     ));
-  }, [users]);
+  }, []);
 
   const count = useMemo(() => countActiveUsers(users), [users]);
 

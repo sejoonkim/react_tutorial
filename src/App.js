@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 // import Hello from './Hello';
 // import Wrapper from './Wrapper';
 //import Counter from './Counter';
@@ -6,9 +6,24 @@ import React, { useRef } from 'react';
 import './App.css';
 //import InputSample from './InputSample';
 import UserList from './UserList';
+import CreateUser from './CreateUser';
 
 function App() {
-  const users = [
+  // useState with objects
+  const [inputs, setInputs] = useState({
+    username: '',
+    email: '',
+  });
+  const { username, email } = inputs;
+  const onChange = e => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value
+    });
+  }
+  // manage with useState
+  const [users, setUsers] = useState([
     {
         id: 1,
         username: 'brian',
@@ -24,19 +39,41 @@ function App() {
         username: 'jaeyi',
         email: 'public.jaeyi@gmail.com'
     }
-  ];
+  ]);
+
+  
 
   // nextId is managed by useRef()
   const nextId = useRef(4);
 
   const onCreate = () => {
+    const user = {
+      id: nextId.current,
+      username,
+      email,
+    };
+    //setUsers([...users, user]);
+    setUsers(users.concat(user));
 
-    console.log(nextId.current)
+    setInputs({
+      username: '',
+      email: ''
+    });
+    
     nextId.current += 1;
   }
 
   return (
-    <UserList users={users}/>
+    <>
+      <CreateUser 
+        username={username}
+        email={email}
+        onChange={onChange}
+        onCreate={onCreate}
+      />
+      <UserList users={users}/>
+    </>
+    
 
     //<InputSample />
 

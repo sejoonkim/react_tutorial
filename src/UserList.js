@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 
 function User({ user, onRemove, onToggle }) {
     const { username, email, id, active } = user;
+
+    useEffect(() => {
+        console.log(user);
+
+        return () => {
+
+            console.log(user);
+        }
+    }, [user]); //called when changes done or called
+
+    // useEffect(() => {
+    //     console.log('components appear');
+    //     // props -> state
+    //     // REST API
+    //     // D3 Video.js
+    //     // setInterval, setTimeout
+    //     return () => {
+    //         // clearInterval, clearTimeout
+    //         // delete library instance
+    //         console.log('componenets disappear');
+    //     }
+    // }, [])
     return (
         <div>
             <b style={{

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 // import Hello from './Hello';
 // import Wrapper from './Wrapper';
 //import Counter from './Counter';
@@ -7,6 +7,11 @@ import './App.css';
 //import InputSample from './InputSample';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
+
+function countActiveUsers(users) {
+  console.log('counting active users...');
+  return users.filter(user => user.active).length;
+}
 
 function App() {
   // useState with objects
@@ -68,7 +73,7 @@ function App() {
 
   const onRemove = id => {
     setUsers(users.filter(user => user.id !== id));
-  }
+  };
 
   const onToggle = id => {
     setUsers(users.map(
@@ -76,7 +81,9 @@ function App() {
         ? { ...user, active: !user.active } // make a new object, copy original, then adjust
         : user
     ));
-  }
+  };
+
+  const count = useMemo(() => countActiveUsers(users), [users]);
 
   return (
     <>
@@ -87,6 +94,7 @@ function App() {
         onCreate={onCreate}
       />
       <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+      <div>Active users: {count}</div>
     </>
     
 

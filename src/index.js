@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Counter from './Counter';
+import ContextSample from './ContextSample';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

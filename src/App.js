@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, useCallback, useReducer } from 'react';
+import React, { useRef, useState, useMemo, useCallback, useReducer, createContext } from 'react';
 // import Hello from './Hello';
 // import Wrapper from './Wrapper';
 //import Counter from './Counter';
@@ -75,6 +75,8 @@ function reducer(state, action) {
   }
 }
 
+export const UserDispatch = createContext(null);
+
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [form, onChange, reset] = useInputs({
@@ -108,24 +110,24 @@ function App() {
     reset();
   }, [username, email, reset]);
 
-  const onToggle = useCallback(id => {
-    dispatch({
-      type: 'TOGGLE_USER',
-      id
-    });
-  }, []);
+  // const onToggle = useCallback(id => {
+  //   dispatch({
+  //     type: 'TOGGLE_USER',
+  //     id
+  //   });
+  // }, []);
 
-  const onRemove = useCallback(id => {
-    dispatch({
-      type: 'REMOVE_USER',
-      id
-    });
-  }, [])
+  // const onRemove = useCallback(id => {
+  //   dispatch({
+  //     type: 'REMOVE_USER',
+  //     id
+  //   });
+  // }, [])
 
   const count = useMemo(() => countActiveUsers(users), [users]);
 
   return (
-    <>
+    <UserDispatch.Provider value={dispatch}>
       <CreateUser 
         username={username}
         email={email}
@@ -138,13 +140,13 @@ function App() {
       />
       <UserList 
         users={users} 
-        onToggle={onToggle}
-        onRemove={onRemove}
+        // onToggle={onToggle}
+        // onRemove={onRemove}
         />
       {/* <UserList users={users} onRemove={onRemove} onToggle={onToggle}/> */}
       <div>Active users: {count}</div>
       {/* <div>Active users: {count}</div> */}
-    </>
+    </UserDispatch.Provider>
     
 
     //<InputSample />

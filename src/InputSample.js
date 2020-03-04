@@ -1,23 +1,70 @@
 import React, { useState } from 'react';
 
 function InputSample() {
-    const [text, setText] = useState('');
+    const [inputs, setInputs] = useState({
+        // set default values
+        name: '',
+        nickname: '',
+    });
+
+    // use destructuring assignment to extract values
+    const { name, nickname } = inputs;
+
+    // const [text, setText] = useState('');
 
     const onChange = (e) => {
-        setText(e.target.value);
+        // use destructuring assignment to exract values from e.target
+        const { name, value } = e.target;
+
+        setInputs({
+            ...inputs,
+            [name]: value,
+        })
+
+
+        // const nextInputs = {
+        //     ...inputs,
+        //     [name]: value,
+        // };
+
+        //setInputs(nextInputs);
+        
+
+        // console.log(e.target.name);
+        // console.log(e.target.value);
+        // setText(e.target.value);
     };
 
     const onReset = () => {
-        setText('');
+        setInputs({
+            name: '',
+            nickname: '',
+        });
+
+
+        // setText('');
     };
 
     return (
         <div>
-            <input onChange={onChange} value={text} />
+            <input 
+                name="name" 
+                placeholder="name" 
+                onChange={onChange} 
+                value={name}
+            />
+            <input 
+                name="nickname" 
+                placeholder="nickname" 
+                onChange={onChange} 
+                value={nickname}
+            />
+            {/* <input onChange={onChange} value={text} /> */}
             <button onClick={onReset}>Initialize</button>
             <div>
                 <b>value: </b>
-                {text}
+                {name} ({nickname})
+                {/* {text} */}
             </div>
         </div>
     );
